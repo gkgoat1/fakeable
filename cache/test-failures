@@ -1,0 +1,1 @@
+{"version":1,"failures":[{"contract":"test/FakeableCore.t.sol:FakeableCoreTest","test":"test_transferFake_exact"}]}
