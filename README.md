@@ -31,4 +31,4 @@ plus views `balanceOf`, `realOf`, `fakeOf`, `totalSupply`, `underlying`, `vault`
 
 ## Gates
 
-`forge test` (19 green), `forge build --sizes` (impl ≤ 16 KiB — currently ~12 KiB).
+`forge test` (18 green: 14 core + 3 factory/beacon + 1 invariant), `forge build --sizes` (impl ≤ 16 KiB — currently ~12 KiB).
