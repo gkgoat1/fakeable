@@ -191,6 +191,24 @@ contract FakeableCoreTest is Test {
         token.burnFake(21);
     }
 
+    function test_burnReal_and_from() public {
+        vm.prank(alice);
+        token.wrap(300);
+        vm.prank(alice);
+        token.burnReal(100); // underlying stays in the vault (protocol settles)
+        assertEq(token.realOf(alice), 200);
+        assertEq(underlying.balanceOf(address(token)), 300);
+        vm.prank(alice);
+        token.approve(bob, 150);
+        vm.prank(bob);
+        token.burnRealFrom(alice, 150);
+        assertEq(token.realOf(alice), 50);
+        assertEq(token.allowance(alice, bob), 0);
+        vm.prank(alice);
+        vm.expectRevert(FakeableERC20.InsufficientReal.selector);
+        token.burnReal(51);
+    }
+
     // ── storage slot + decimals ─────────────────────────────────────────────
 
     function test_storage_slot_matches_erc7201_formula() public {

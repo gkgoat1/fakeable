@@ -218,6 +218,19 @@ abstract contract FakeableERC20 is ERC20Upgradeable, ReentrancyGuard {
         _burnFake(from, amount);
     }
 
+    /// Real burn (markets redemption path): the underlying stays in the vault — the
+    /// caller's protocol (e.g. an Event) settles the payout separately.
+    function burnReal(uint256 amount) external {
+        if (super.balanceOf(msg.sender) < amount) revert InsufficientReal();
+        _burn(msg.sender, amount);
+    }
+
+    function burnRealFrom(address from, uint256 amount) external {
+        _spendAllowance(from, msg.sender, amount);
+        if (super.balanceOf(from) < amount) revert InsufficientReal();
+        _burn(from, amount);
+    }
+
     /// Privileged fake mint — the policy is the derived contract's.
     function mintFake(address to, uint256 amount) external {
         if (!_authorizeFakeMint(msg.sender)) revert UnauthorizedMinter(msg.sender);
