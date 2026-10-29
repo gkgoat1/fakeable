@@ -1,8 +1,15 @@
 # Fakeable Wrapped Token — PLAN v1 (draft for review)
 
-**Status:** DRAFT v2 — owner review round 1 incorporated (§9 decisions). This repo is
-independent (separately pushable to GitHub/Radicle; the eth superproject ignores it).
-Implementation begins on approval; on approval it integrates into `MASTER-PLAN.md`.
+**Status:** IMPLEMENTED (F-1..F-5 complete; 19 forge tests + conservation fuzzer
+green). This repo is independent (separately pushable to GitHub/Radicle; the eth
+superproject ignores it). As-built deviations:
+
+- OZ 5.x has no `ReentrancyGuardUpgradeable` — the base `ReentrancyGuard` is
+  proxy-safe (ERC-7201 namespaced storage); used directly.
+- The proportional move emits TWO `Transfer` events (real leg + fake leg) summing to
+  the amount — single-event-per-leg keeps indexers exact without a custom parser.
+- The factory is unprivileged (anyone may create a wrapper for an underlying); the
+  beacon admin is the upgrade authority.
 
 **One-line:** an abstract, upgradeable-compatible ERC20 base contract for wrapping an
 ERC20 into a token with real (redeemable) and fake (non-redeemable) balance
