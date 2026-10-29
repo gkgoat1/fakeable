@@ -243,7 +243,7 @@ abstract contract FakeableERC20 is ERC20Upgradeable, ReentrancyGuard {
 
     /// Wrap: credits the vault-balance DELTA as real (fee-on-transfer/rebasing
     /// underlyings supported).
-    function wrap(uint256 amount) external nonReentrant {
+    function wrap(uint256 amount) external virtual nonReentrant {
         FakeableStorage storage $ = _storage();
         IERC20 u = $.underlying;
         address v = vault();
@@ -255,7 +255,7 @@ abstract contract FakeableERC20 is ERC20Upgradeable, ReentrancyGuard {
     }
 
     /// Unwrap: burns REAL only (fake never redeems) and pays out of the vault.
-    function unwrap(uint256 amount) external nonReentrant {
+    function unwrap(uint256 amount) external virtual nonReentrant {
         if (super.balanceOf(msg.sender) < amount) revert InsufficientReal();
         _burn(msg.sender, amount);
         _withdrawUnderlying(_storage().underlying, vault(), msg.sender, amount);
