@@ -86,6 +86,15 @@ abstract contract FakeableERC20 is ERC20Upgradeable, ReentrancyGuard {
         return super.balanceOf(account) + _storage().fake[account];
     }
 
+    /// @notice The real (asset-backed) total supply.
+    function realSupply() public view returns (uint256) {
+        return super.totalSupply();
+    }
+
+    function fakeSupply() public view returns (uint256) {
+        return _storage().fakeSupply;
+    }
+
     function totalSupply() public view override returns (uint256) {
         return super.totalSupply() + _storage().fakeSupply;
     }
