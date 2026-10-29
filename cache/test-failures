@@ -1,1 +1,1 @@
-{"version":1,"failures":[{"contract":"test/FakeableCore.t.sol:FakeableCoreTest","test":"test_transferFake_exact"}]}
+{"version":1,"failures":[{"contract":"test/FactoryBeacon.t.sol:FactoryBeaconTest","test":"test_beacon_upgrade_preserves_state_for_all_instances"}]}
